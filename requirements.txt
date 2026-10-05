@@ -1,0 +1,27 @@
+# PDF parsing
+PyMuPDF==1.24.11
+pdfplumber==0.11.4
+
+# Vector and keyword retrieval
+qdrant-client==1.12.1
+rank-bm25==0.2.2
+numpy>=2.1.0,<3
+
+# Gemini and Cohere REST APIs
+httpx==0.28.1
+
+# Application utilities
+pyyaml==6.0.2
+tqdm==4.67.1
+colorlog==6.9.0
+python-dotenv==1.0.1
+click==8.1.8
+rich==13.9.4
+packaging>=24.0
+
+# Web UI
+streamlit>=1.40.0,<2
+
+# Development
+pytest==8.3.4
+pytest-cov==6.0.0

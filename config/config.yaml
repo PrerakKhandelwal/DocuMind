@@ -1,0 +1,105 @@
+# ── Paths ───────────────────────────────────────────────────
+# All paths below are relative to the project root (AgenticModel/) unless absolute.
+paths:
+  docs_dir: "docs"
+  index_cache: "cache/page_hashes.json"
+  qdrant_storage: "qdrant_storage"
+  bm25_storage: "cache/bm25"
+  logs_dir: "logs"
+  parent_store: "cache/parent_store.json"
+  version_registry: "cache/version_registry.json"
+
+# ── Ingestion ────────────────────────────────────────────────
+ingestion:
+  # Default version tag when no version is detectable from filename/content
+  default_version: "1.0.0"
+  # Regex patterns to extract version from filename
+  # e.g.  "ProductGuide_v2.3.1.pdf"  or  "manual-3.0.pdf"
+  version_patterns:
+    - '[vV](\d+\.\d+(?:\.\d+)?)'
+    - '[-_](\d+\.\d+(?:\.\d+)?)[-_\.]'
+    - 'release[- _]?(\d+\.\d+(?:\.\d+)?)'
+  # OCR: enable if you have scanned (image-only) PDFs
+  enable_ocr: false
+  ocr_language: "en"
+
+# ── Chunking ─────────────────────────────────────────────────
+chunking:
+  parent_chunk_size: 1024      # tokens — fed to LLM as context
+  child_chunk_size: 256        # tokens — used for retrieval
+  chunk_overlap: 32
+  # Tables are NEVER split — they're always one atomic chunk
+
+# ── Embeddings ───────────────────────────────────────────────
+embeddings:
+  model_name: "gemini-embedding-001"
+  base_url: "https://generativelanguage.googleapis.com/v1beta"
+  dimensions: 768
+  timeout_s: 120
+
+# ── Qdrant ───────────────────────────────────────────────────
+# connection:
+#   "embedded" — no Docker, no qdrant.exe; vectors stored under embedded_path (best for locked-down laptops).
+#   "server"     — connect to a running Qdrant (Windows binary from GitHub, Docker, etc.) on host:port.
+qdrant:
+  connection: "embedded"
+  embedded_path: "cache/qdrant_data"
+  host: "localhost"
+  port: 6333
+  # Collection names are auto-prefixed with "sample_docs_"
+  collection_prefix: "sample_docs"
+  vector_size: 768  
+  distance: "Cosine"
+  on_disk_payload: true        # Saves RAM for large corpora (server mode only; embedded uses RAM-friendly settings)
+
+# ── BM25 (sparse / keyword) ──────────────────────────────────
+bm25:
+  k1: 1.5
+  b: 0.75
+  top_k: 20
+
+# ── Retrieval ────────────────────────────────────────────────
+retrieval:
+  dense_top_k: 20              # candidates from dense search
+  sparse_top_k: 20             # candidates from BM25
+  rerank_top_k: 8              # chunks kept after reranking
+  rrf_k: 60                    # RRF constant (standard = 60)
+  min_score_threshold: 0.10    # below this → "not found"
+
+# ── Reranker ─────────────────────────────────────────────────
+reranker:
+  model: "rerank-v3.5"
+  base_url: "https://api.cohere.com/v2/rerank"
+  timeout_s: 120
+
+# ── LLM ──────────────────────────────────────────────────────
+llm:
+  gemini:
+    model: "gemini-2.5-flash"
+    base_url: "https://generativelanguage.googleapis.com/v1beta"
+    max_tokens: 1024
+    timeout_s: 120
+    temperature: 0.0
+
+# ── Multi-query generation ────────────────────────────────────
+multi_query:
+  enabled: false               # avoids extra Gemini calls for each question
+  num_sub_questions: 4
+  # Uses the configured Gemini model
+
+# ── Answer generation ─────────────────────────────────────────
+generation:
+  # If retrieved chunks score below this, return "not found"
+  confidence_threshold: 0.12
+  # Maximum context characters sent to LLM
+  max_context_chars: 12000
+  # Cite every claim with [Doc · Section · Page]
+  require_citations: true
+  not_found_message: >
+    This information is not available in the documentation provided.
+    Please check the relevant release notes or contact support.
+
+# ── Logging ───────────────────────────────────────────────────
+logging:
+  level: "INFO"            # DEBUG | INFO | WARNING | ERROR
+  log_to_file: true

@@ -1,0 +1,42 @@
+# Python artifacts and virtual environments
+__pycache__/
+*.py[cod]
+*.pyd
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# Private source documents and generated indexes/data
+*.pdf
+cache/
+logs/
+qdrant_storage/
+
+# Downloaded model weights
+models/*
+!models/PLACE_MODELS_HERE.txt
+!models/.gitkeep
+
+# Editors and operating system files
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Local-only one-off smoke test (not part of the supported test suite)
+/test_gemini.py
