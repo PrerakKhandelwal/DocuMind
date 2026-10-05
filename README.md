@@ -110,7 +110,7 @@ You can start from the committed template with `Copy-Item .env.example .env` in 
 
 | Model | Purpose | Used for |
 |-------|---------|----------|
-| `gemini-2.5-flash` | Chat / answer generation | `llm.gemini.model` |
+| `gemini-3.8-flash` | Chat / answer generation | `llm.gemini.model` |
 | `gemini-embedding-001` | Embeddings (768-dim) | `embeddings.model_name` |
 | `rerank-v3.5` | Reranks retrieved chunks | `reranker.model` |
 

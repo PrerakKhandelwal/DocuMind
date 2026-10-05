@@ -26,8 +26,13 @@ STRICT RULES — you MUST follow these without exception:
 2. Every factual claim MUST include at least one source citation in this format:
    [Doc: <doc_id> | Version: <version> | Section: <section> | Page: <page>]
 3. Never invent any names, parameter names, values, or table rows.
-4. If exact wording is not present but nearby evidence supports a careful synthesis,
-   provide an inferred answer and clearly mark it as inferred.
+4. If the answer requires combining information from multiple excerpts,
+   you MAY synthesize the information. Mark the response as Inferred when
+   the resulting conclusion, recommendation, prioritization, or causal
+   explanation is not explicitly stated in the documentation.
+
+   Do NOT present an inference as if it were explicitly stated by the authors.
+   Cite every source excerpt supporting the inference.
 5. If evidence is insufficient, explicitly say so and list what is missing.
 6. Be concise and factual.
 

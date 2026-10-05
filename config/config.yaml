@@ -75,7 +75,9 @@ reranker:
 # ── LLM ──────────────────────────────────────────────────────
 llm:
   gemini:
-    model: "gemini-2.5-flash"
+    model: "gemini-3.8-flash"
+    fallback_models:
+      - "gemini-3.5-flash"
     base_url: "https://generativelanguage.googleapis.com/v1beta"
     max_tokens: 1024
     timeout_s: 120

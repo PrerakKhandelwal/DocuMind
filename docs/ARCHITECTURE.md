@@ -78,7 +78,7 @@ flowchart TB
 | Component | Provider | Model | Purpose |
 |-----------|----------|-------|---------|
 | Embeddings | Gemini API | `gemini-embedding-001` | Document and query vectors (768 dimensions) |
-| LLM | Gemini API | `gemini-2.5-flash` | Answer generation |
+| LLM | Gemini API | `gemini-3.8-flash` | Answer generation |
 | Reranker | Cohere API | `rerank-v3.5` | Candidate relevance ranking |
 | Vector size | — | 768 dims | Must match embedding model |
 
